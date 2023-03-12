@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress:6.1.1
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: wordpressdb
+    volumes:
+      - ~/Downloads/tmp/docker/wp/app/plugins:/var/www/html/wp-content/plugins
+      - ~/Downloads/tmp/docker/wp/app/uploads:/var/www/html/wp-content/uploads
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ~/docker/mysql-data:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
