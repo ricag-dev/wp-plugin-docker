@@ -77,7 +77,6 @@ class Calcula_Finiquito_Public
          */
 
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/calcula-finiquito-public.css', array(), $this->version, 'all');
-
     }
 
     /**
@@ -100,7 +99,10 @@ class Calcula_Finiquito_Public
          * class.
          */
 
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/calcula-finiquito-public.js', array('jquery'), $this->version, false);
+        wp_register_script('vuejs', plugin_dir_url(__FILE__) . 'js/vue.global.js',null,null, true);
+        wp_enqueue_script('vuejs');
+        wp_enqueue_script($this->plugin_name.'-formulatio', plugin_dir_url(__FILE__) . 'js/calcula-finiquito-formulario.js', array('vuejs'), $this->version, false);
+        wp_enqueue_script($this->plugin_name.'-calculo', plugin_dir_url(__FILE__) . 'js/calcula-finiquito-calculo.js', array('vuejs'), $this->version, false);
 
     }
 
@@ -128,8 +130,13 @@ class Calcula_Finiquito_Public
             wp_redirect('/');
         }
 
+    }
 
-//        $options = get_option( $this->plugin_name, [] );
-//        print_r($options);
+    public function register_shortcodes(){
+        add_shortcode( 'finiquito_calculo', array( $this, 'shortcode_function') );
+    }
+
+    public function shortcode_function(){
+        include_once( plugin_dir_path( __FILE__ ) . 'partials/calcula-finiquito-public-display.php' );
     }
 }

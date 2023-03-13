@@ -1,0 +1,48 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+#app-vue
+    .flex
+        display flex
+        .flex-1
+            flex 1 1 0%
+        .flex-auto
+            flex 1 1 auto
+    .gap-1
+        gap 1rem
+    .m-1
+        margin 1rem
+    .mx-1
+        margin 0 1rem
+    .my-1
+        margin 1rem 0
+    for n in range(1,11)
+        .w-{n}-12
+            width (n/12)*100%
+
+    .tc
+        text-align center
+    button
+        background transparent
+        color #ccc
+        border 1px solid #ccc
+        border-radius 3px
+        &:disabled
+            background #cccccc
+            color #FFF
+        &.submit
+            background #000
+            color #FFF
+            border-radius 10px
+    .error
+        color red
+        font-size small
+        margin-top -0.7rem
+        margin-bottom 1rem
+
+    table tr:nth-child(even)
+        background #EEE
+
+    h4
+        margin 0

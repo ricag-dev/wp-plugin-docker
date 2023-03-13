@@ -14,6 +14,7 @@
 $update = false;
 if($_POST){
     add_option( $this->plugin_name, $_POST );
+    update_option( $this->plugin_name, $_POST );
     $update = true;
 }
 $options = get_option( $this->plugin_name, [] );
@@ -29,7 +30,8 @@ $options = get_option( $this->plugin_name, [] );
         <table class="wp-list-table widefat fixed striped table-view-list posts">
             <thead>
             <tr>
-                <th scope="col" colspan="2">Sección</th>
+                <th scope="col">shortcode</th>
+                <th scope="col">[finiquito_calculo]</th>
             </tr>
             </thead>
 

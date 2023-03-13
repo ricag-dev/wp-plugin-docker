@@ -2,3 +2,87 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+#app-vue .flex {
+  display: flex;
+}
+#app-vue .flex .flex-1 {
+  flex: 1 1 0%;
+}
+#app-vue .flex .flex-auto {
+  flex: 1 1 auto;
+}
+#app-vue .gap-1 {
+  gap: 1rem;
+}
+#app-vue .m-1 {
+  margin: 1rem;
+}
+#app-vue .mx-1 {
+  margin: 0 1rem;
+}
+#app-vue .my-1 {
+  margin: 1rem 0;
+}
+#app-vue .w-1-12 {
+  width: 8.333333333333332%;
+}
+#app-vue .w-2-12 {
+  width: 16.666666666666664%;
+}
+#app-vue .w-3-12 {
+  width: 25%;
+}
+#app-vue .w-4-12 {
+  width: 33.33333333333333%;
+}
+#app-vue .w-5-12 {
+  width: 41.66666666666667%;
+}
+#app-vue .w-6-12 {
+  width: 50%;
+}
+#app-vue .w-7-12 {
+  width: 58.333333333333336%;
+}
+#app-vue .w-8-12 {
+  width: 66.66666666666666%;
+}
+#app-vue .w-9-12 {
+  width: 75%;
+}
+#app-vue .w-10-12 {
+  width: 83.33333333333334%;
+}
+#app-vue .w-11-12 {
+  width: 91.66666666666666%;
+}
+#app-vue .tc {
+  text-align: center;
+}
+#app-vue button {
+  background: transparent;
+  color: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+#app-vue button:disabled {
+  background: #ccc;
+  color: #fff;
+}
+#app-vue button.submit {
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+}
+#app-vue .error {
+  color: #f00;
+  font-size: small;
+  margin-top: -0.7rem;
+  margin-bottom: 1rem;
+}
+#app-vue table tr:nth-child(even) {
+  background: #eee;
+}
+#app-vue h4 {
+  margin: 0;
+}
