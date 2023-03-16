@@ -30,20 +30,20 @@ const Calculo = {
 	</div>
 	
 	<table>
-		<tr><td>Salario mensual</td><td>$ {{total.salario.toFixed(2)}}</td></tr>
-		<tr><td>Salario devengado</td><td>$ {{total.denegado.toFixed(2)}}</td></tr>
-		<tr><td>Aguinaldo</td><td>$ {{total.aguinaldo.toFixed(2)}}</td></tr>
-		<tr><td>Vacaciones</td><td>$ {{total.vacaciones.toFixed(2)}}</td></tr>
-		<tr><td>Prima vacacional</td><td>$ {{total.prima.toFixed(2)}}</td></tr>
-		<tr><td>TOTAL</td><td><h4>$ {{total.total.toFixed(2)}}</h4></td></tr>
+		<tr><td>Salario mensual</td><td>$ {{num_format(total.salario)}}</td></tr>
+		<tr><td>Salario devengado</td><td>$ {{num_format(total.denegado)}}</td></tr>
+		<tr><td>Prima Antiguedad</td><td>$ {{num_format(total.prima_antiguedad)}}</td></tr>
+		<tr><td>Vacaciones</td><td>$ {{num_format(total.vacaciones)}}</td></tr>
+		<tr><td>Prima vacacional</td><td>$ {{num_format(total.prima_vacacional)}}</td></tr>
+		<tr><td>Indemnización por despido</td><td>$ {{num_format(total.indemnizacion)}}</td></tr>
+		<tr><td>TOTAL</td><td><h4>$ {{num_format(total.total)}}</h4></td></tr>
 	</table>
 	
-	<h2>¿Cuánto cobrarías en 12 meses que dura el juicio si metieras la demanda hoy?</h2>
+	<h2>¿Cuánto cobrarías si presentas la demanda hoy?</h2>
 	<table>
-		<tr><td>Tope Salarios Caídos</td><td>$ {{(total.salario*12).toFixed(2)}}</td></tr>
-		<tr><td>Subtotal</td><td>144,000.00</td></tr>
-		<tr><td>Intereses Mensuales</td><td>0.00</td></tr>
-		<tr><td>TOTAL</td><td><h4>201,901.03</h4></td></tr>
+		<tr><td>Tope Salarios Caídos</td><td>$ {{num_format(total.salarios_caidos)}}</td></tr>
+		<tr><td>Indemnización</td><td>$ {{num_format(total.total)}}</td></tr>
+		<tr><td>TOTAL</td><td><h4>$ {{num_format(total.total_demanda)}}</h4></td></tr>
 	</table> 
 	
 	<div class="tc">
@@ -93,22 +93,25 @@ const Calculo = {
 			const denegado = salario * nopagados
 
 			const sal_base = salario/30
-			const diasAno = Math.abs(fecha_fin - new Date())
+			const ano_actual = new Date()
+			const E3 = new Date(ano_actual.getFullYear(),0,1)
+			const diasAno = Math.abs(fecha_fin - E3)
 			const E4 = Math.ceil(diasAno / (1000 * 60 * 60 * 24))
 			const E5 = E4/365
 			const aguinaldo = sal_base*15*E5
 
 			const vacaciones = sal_base*14*E5
 
-			const prima = 0.25*vacaciones
+			const prima_vacacional = 0.25*vacaciones
 
-			const p_antiguedad = prima*0.25
+			const prima_antiguedad = 350*12
 
-			const sal_integr = (salario+500)/70
+			const indemnizacion = sal_base*45
 
-			const dias45 = sal_integr*45
+			const total = aguinaldo+vacaciones+prima_vacacional+indemnizacion+prima_antiguedad
 
-			const total = aguinaldo+vacaciones+prima+p_antiguedad+dias45
+			const salarios_caidos = sal_base * 30 * 6
+			const total_demanda = salarios_caidos + total
 
 			return {
 				inicio,
@@ -117,26 +120,38 @@ const Calculo = {
 				vacaciones_dias,
 				salario,
 				denegado,
-				aguinaldo,
+				prima_antiguedad,
 				vacaciones,
-				prima,
+				prima_vacacional,
+				indemnizacion,
 				total,
+				salarios_caidos,
+				total_demanda
 			}
 		}
 	},
 	methods:{
+		num_format(num){
+			return 	parseFloat(num.toFixed(2)).toLocaleString({
+				style: 'currency',
+				currency: 'USD',
+			})
+		},
 		whats_send(){
 			const li = this.total
 			const data = `Fecha ingreso: ${li.inicio}
 					Fecha salida: ${li.fin}
 					Tiempo trabajando: ${li.dias}
 					Vacaciones: ${li.vacaciones_dias}
-					Salario mensual: $ ${li.salario.toFixed(2)}
-					Salario devengado: $ ${li.denegado.toFixed(2)}
-					Aguinaldo: $ ${li.aguinaldo.toFixed(2)}
-					Vacaciones: $ ${li.vacaciones.toFixed(2)}
-					Prima vacacional: $ ${li.prima.toFixed(2)}
-					TOTAL: $ ${li.total.toFixed(2)}
+					Salario mensual: $ ${this.num_format(li.salario)}
+					Salario devengado: $ ${this.num_format(li.denegado)}
+					Prima Antiguedad: $ ${this.num_format(li.prima_antiguedad)}
+					Vacaciones: $ ${this.num_format(li.vacaciones)}
+					Prima vacacional: $ ${this.num_format(li.prima_vacacional)}
+					Indemnización por despido: $ ${this.num_format(li.indemnizacion)}
+					TOTAL: $ ${this.num_format(li.total)}
+					Tope Salarios Caídos: $ ${this.num_format(li.salarios_caidos)}
+					Total demanda: $ ${this.num_format(li.total_demanda)}
 					
 					. ${this.input.despidieron} ME DESPIDIERON!
 					`

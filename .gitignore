@@ -1,2 +1,4 @@
 .idea
-app/plugins/official-facebook-pixel
+/app/plugins/*
+!/app/plugins/calcula-finiquito
+/app/uploads/*
