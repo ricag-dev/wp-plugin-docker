@@ -64,7 +64,7 @@ const Formulario = {
 	<div class="error" v-if="error.despidieron">{{error.despidieron}}</div>
 	
 	<div class="tc">
-		<button class="submit" @click="enviar" class="w-6-12">CALCULAR</button>
+		<button @click="enviar" class="submit w-6-12">CALCULAR</button>
 	</div>
   `,
 	data() {
@@ -100,7 +100,6 @@ const Formulario = {
 			const {ingreso, salida} = this.input.fecha
 			const {sueldo, nopagados} = this.input
 			if(!ingreso.dia || !ingreso.mes || !ingreso.ano){
-				console.log('nanan')
 				this.error.ingreso = 'La fecha es invalida!'
 			}
 			if(!salida.dia || !salida.mes || !salida.ano){

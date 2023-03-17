@@ -27,25 +27,31 @@ $options = get_option( $this->plugin_name, [] );
 </div>
 
 <script>
-    const { createApp } = Vue
-
-    app = createApp({
-        components:{
-            Formulario,
-            Calculo
-        },
-        data() {
-            return {
-                input: null,
-                whats: '<?php echo $options["whatsapp"]?>'
-            }
-        },
-        methods: {
-            input_calcula(values){
-                this.input = values
-            }
-        }
+    jq = new Promise((resolve)=>{
+        jQuery( document ).ready(()=> resolve(true))
     })
+    time = new Promise((resolve)=> setTimeout(()=> resolve(true),500))
+    Promise.all([jq,time]).then(()=>{
+        console.log('entro')
+        const { createApp } = Vue
+        app = createApp({
+            components:{
+                Formulario,
+                Calculo
+            },
+            data() {
+                return {
+                    input: null,
+                    whats: '<?php echo $options["whatsapp"]?>'
+                }
+            },
+            methods: {
+                input_calcula(values){
+                    this.input = values
+                }
+            }
+        })
 
-    app.mount('#app-vue')
+        app.mount('#app-vue')
+    })
 </script>

@@ -47,7 +47,7 @@ const Calculo = {
 	</table> 
 	
 	<div class="tc">
-		<button class="submit" @click="whats_send" class="w-6-12">¡Quiero demandar!</button>
+		<button @click="whats_send" class="submit w-6-12">¡Quiero demandar!</button>
 	</div>
 
 `,
