@@ -16,6 +16,23 @@ services:
       - ~/Downloads/tmp/docker/wp/app/plugins:/var/www/html/wp-content/plugins
       - ~/Downloads/tmp/docker/wp/app/uploads:/var/www/html/wp-content/uploads
 
+  wpcli:
+    container_name: wordpress-cli
+    depends_on:
+      - wordpress
+    image: wordpress:cli
+    user: 1000:1000
+    command: tail -f /dev/null
+    volumes:
+      - wordpress:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: wordpressdb
+    profiles:
+      - dev
+
   db:
     image: mysql:5.7
     restart: always
@@ -29,4 +46,5 @@ services:
 
 volumes:
   wordpress:
+  wpcli:
   db:

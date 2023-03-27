@@ -3,7 +3,6 @@ const error_json ={
 	ingreso: null,
 	salida: null,
 	sueldo: null,
-	nopagados: null,
 	despidieron: null
 }
 const Formulario = {
@@ -50,12 +49,6 @@ const Formulario = {
 	</div>
 	<div class="error" v-if="error.sueldo">{{error.sueldo}}</div>
 	
-	<label>Días trabajados no pagados</label>
-	<div class="flex w-6-12 my-1">
-		<input v-model="input.nopagados" type="number" class="flex-auto">
-	</div>
-	<div class="error" v-if="error.nopagados">{{error.nopagados}}</div>
-	
 	<label>¿Ya te despidieron?</label>
 	<div class="flex my-1">
 		<button class="w-6-12" :disabled="input.despidieron=='SI'" @click="input.despidieron='SI'">SI</button>
@@ -87,7 +80,6 @@ const Formulario = {
 					}
 				},
 				sueldo: null,
-				nopagados: 0,
 				despidieron: 'NO'
 			},
 			error: {...error_json},
@@ -97,8 +89,8 @@ const Formulario = {
 	methods: {
 		enviar(){
 			this.error = {...error_json}
-			const {ingreso, salida} = this.input.fecha
-			const {sueldo, nopagados} = this.input
+			const { ingreso, salida } = this.input.fecha
+			const { sueldo } = this.input
 			if(!ingreso.dia || !ingreso.mes || !ingreso.ano){
 				this.error.ingreso = 'La fecha es invalida!'
 			}
@@ -111,12 +103,9 @@ const Formulario = {
 			if(!sueldo || sueldo<0){
 				this.error.sueldo = 'Sueldo invalido!'
 			}
-			if(typeof nopagados !='number' || nopagados<0){
-				this.error.nopagados = 'No pagado tiene un valor invalido!'
-			}
 
 			const error = this.error
-			if(!error.ingreso && !error.ingreso && !error.sueldo && !error.nopagados && !error.despidieron){
+			if(!error.ingreso && !error.ingreso && !error.sueldo && !error.despidieron){
 				this.$emit('input',this.input)
 			}
 		}
